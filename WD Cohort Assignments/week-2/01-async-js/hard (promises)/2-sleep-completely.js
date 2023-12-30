@@ -5,8 +5,10 @@
 
 function sleep(seconds) {
   let now = new Date().getTime();
-  while (new Date().getTime() < now + seconds * 1000) {}
-  console.log(seconds + ' seconds passed');
+  return new Promise((resolve, reject) => {
+    while (new Date().getTime() < now + seconds) {}
+    resolve()
+  })
 }
 
-sleep(5);
+module.exports = sleep
