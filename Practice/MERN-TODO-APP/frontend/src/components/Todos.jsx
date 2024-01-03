@@ -1,12 +1,13 @@
-import React from "react";
-import Todo from "./Todo";
+import React, { useEffect, useState } from 'react';
+import Todo from './Todo';
 
-const Todos = () => {
+const Todos = (props) => {
   return (
-    <div>
-      Todos <br />
-      <Todo></Todo>
-    </div>
+    <>
+      {props.todos.map((todo) => (
+        <Todo title={todo.title} description={todo.description}></Todo>
+      ))}
+    </>
   );
 };
 
