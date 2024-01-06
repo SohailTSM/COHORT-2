@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { adminSchema } = require('../types/adminType');
 const { Admin } = require('../database/adminModel');
-const { adminMiddleware } = require('../middlewares/adminMiddleware');
 
 adminRouter.post('/create', async (req, res) => {
   if (req.headers.secret != process.env.CREATE_ADMIN_SECRET) {
@@ -46,6 +45,5 @@ adminRouter.post('/signin', async (req, res) => {
   res.status(200).json({ token });
 });
 
-adminRouter.get('/', adminMiddleware, (req, res) => {});
 
 module.exports = { adminRouter };

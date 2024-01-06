@@ -6,7 +6,7 @@ const profileSchema = new mongoose.Schema({
   linkedIn: String,
   twitter: String,
   github: String,
-  interests: [String],
+  interests: String,
 });
 
 const Profile = mongoose.model('profile', profileSchema);

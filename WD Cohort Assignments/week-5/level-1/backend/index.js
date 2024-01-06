@@ -7,8 +7,8 @@ require('dotenv/config');
 const app = express();
 
 app.use(express.json());
-app.use('/', profileRouter);
 app.use('/admin', adminRouter);
+app.use('/', profileRouter);
 
 connectToDB(() => {
   app.listen(3000, () => {
