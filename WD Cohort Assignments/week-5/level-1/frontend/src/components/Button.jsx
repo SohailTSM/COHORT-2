@@ -1,13 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const Button = ({ text, href, onClick }) => {
+  const colour = href == 'new' ? 'green' : 'red';
   return (
     <Link
       to={`profile/${href}`}
-      className='inline-flex m-2 items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+      className='mt-2 mx-2'
       onClick={onClick}
     >
-      {text}
+      <button
+                  className={`w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-${colour}-500 rounded-md hover:bg-${colour}-700 focus:outline-none focus:bg-${colour}-700'
+                  type='button`}
+                >
+                  {text}
+                </button>
     </Link>
   );
 };

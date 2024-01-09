@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const Profile = ({ profile, isAdmin }) => {
   return (
-    <div className=' p-6 w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 my-4 '>
+    <div className=' p-6 w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 my-4'>
       <h5 className='mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
         {profile.name}
       </h5>
@@ -13,21 +13,21 @@ const Profile = ({ profile, isAdmin }) => {
       <a
         target='_blank'
         href={profile.linkedIn}
-        className='inline-flex mr-2 items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+        className='inline-flex mr-2 items-center px-3 py-2 text-sm font-medium text-center text-white bg-purple-700 rounded-lg hover:bg-purple-600 focus:ring-4 focus:outline-none focus:ring-purple-300 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-600'
       >
         LinkedIn
       </a>
       <a
         target='_blank'
         href={profile.twitter}
-        className='inline-flex mr-2 items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+        className='inline-flex mr-2 items-center px-3 py-2 text-sm font-medium text-center text-white bg-purple-700 rounded-lg hover:bg-purple-600 focus:ring-4 focus:outline-none focus:ring-purple-300 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-600'
       >
         Twitter
       </a>
       <a
         target='_blank'
         href={profile.github}
-        className='inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+        className='inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-purple-700 rounded-lg hover:bg-purple-600 focus:ring-4 focus:outline-none focus:ring-purple-300 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-600'
       >
         Github
       </a>
@@ -37,9 +37,9 @@ const Profile = ({ profile, isAdmin }) => {
       {isAdmin ? (
         <Link
           to={`profile/${profile._id}`}
-          className='inline-flex mr-2 items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+          className='inline-flex mr-2 mt-2 items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-500 focus:ring-4 focus:outline-none dark:bg-green-500 dark:hover:bg-green-700 dark:focus:ring-green-500'
         >
-          Edit
+          Edit Profile
         </Link>
       ) : (
         <></>

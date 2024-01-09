@@ -41,6 +41,9 @@ profileRouter.post('/', adminMiddleware, async (req, res) => {
 
 profileRouter.get('/:id', adminMiddleware, async (req, res) => {
   const id = req.params.id;
+  if (id == 'new') {
+    return res.status(200).json({ profile: 'new' });
+  }
   const profile = await Profile.findOne({ _id: id });
   if (!profile) {
     return res.status(404).json({ message: 'No such profile' });
