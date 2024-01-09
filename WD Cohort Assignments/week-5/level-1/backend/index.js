@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const { connectToDB } = require('./database/connection');
 const { profileRouter } = require('./routes/profile');
 const { adminRouter } = require('./routes/admin');
@@ -6,8 +7,9 @@ require('dotenv/config');
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
-app.use('/admin', adminRouter);
+app.use('/auth', adminRouter);
 app.use('/', profileRouter);
 
 connectToDB(() => {
