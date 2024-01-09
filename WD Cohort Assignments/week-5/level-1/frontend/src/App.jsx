@@ -10,6 +10,9 @@ import ProfilePage, {
   action as profileAction,
 } from './pages/ProfilePage';
 import AuthPge, { action as authAction } from './pages/AuthPage';
+import { createContext, useEffect, useState } from 'react';
+
+export const AuthContext = createContext();
 
 const router = createBrowserRouter([
   {
@@ -23,7 +26,7 @@ const router = createBrowserRouter([
         action: homeAction,
       },
       {
-        path: '/profile',
+        path: '/profile/:id',
         element: <ProfilePage />,
         loader: profileLoader,
         action: profileAction,
@@ -38,7 +41,13 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  const [isAdmin, setIsAdmin] = useState(false);
+  return (
+    <AuthContext.Provider value={[isAdmin, setIsAdmin]}>
+      <div></div>
+      <RouterProvider router={router} />
+    </AuthContext.Provider>
+  );
 };
 
 export default App;
