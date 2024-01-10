@@ -44,11 +44,13 @@ profileRouter.get('/:id', adminMiddleware, async (req, res) => {
   if (id == 'new') {
     return res.status(200).json({ profile: 'new' });
   }
-  const profile = await Profile.findOne({ _id: id });
-  if (!profile) {
+
+  try {
+    const profile = await Profile.findOne({ _id: id });
+    res.status(200).json({ profile });
+  } catch (error) {
     return res.status(404).json({ message: 'No such profile' });
   }
-  res.status(200).json({ profile });
 });
 
 profileRouter.put('/:id', adminMiddleware, async (req, res) => {

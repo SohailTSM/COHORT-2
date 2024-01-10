@@ -4,12 +4,20 @@ import { Form, redirect, useLoaderData, useNavigate } from 'react-router-dom';
 export async function loader({ request }) {
   const url = new URL(request.url);
   const id = url.pathname.split('/')[2];
+  console.log(id);
   const response = await fetch('http://localhost:3000/' + id, {
     headers: {
       Authorization: localStorage.getItem('Authorization'),
     },
   });
   const data = await response.json();
+  if (response.status == 404) {
+    throw new Error(data.message);
+  }
+  if (response.status == 401) {
+    alert('You are not authorized, please login');
+    return redirect('/auth');
+  }
   return data.profile;
 }
 
