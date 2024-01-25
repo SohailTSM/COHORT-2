@@ -3,7 +3,7 @@ const zod = require('zod');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('../config');
-const { User } = require('../db');
+const { User, Account } = require('../db');
 const { authMiddleware } = require('../middleware');
 
 const router = express.Router();
@@ -33,8 +33,13 @@ router.post('/signup', async (req, res) => {
   const hashedPassword = await bcrypt.hash(body.password, 10);
   const user = new User({ ...body, password: hashedPassword });
   const savedUser = await user.save();
+  const account = new Account({
+    userId: savedUser._id,
+    balance: Math.ceil(Math.random() * 10000),
+  });
+  await account.save();
   const token = jwt.sign({ userId: savedUser._id }, JWT_SECRET);
-  res.json(200).json({
+  return res.status(200).json({
     message: 'User created successfully',
     token,
   });
@@ -59,7 +64,7 @@ router.post('/signin', async (req, res) => {
       message: 'Error while logging in',
     });
   }
-  const match = bcrypt.compare(body.password, user.password);
+  const match = await bcrypt.compare(body.password, user.password);
   if (!match) {
     return res.status(411).json({
       message: 'Error while logging in',
@@ -83,8 +88,12 @@ router.put('/', authMiddleware, async (req, res) => {
       message: 'Error while updating information',
     });
   }
+  const hashedPassword = await bcrypt.hash(body.password, 10);
 
-  await User.findByIdAndUpdate(req.userId, body);
+  await User.findByIdAndUpdate(req.userId, {
+    ...body,
+    password: hashedPassword,
+  });
 
   res.status(200).json({
     message: 'Updated successfully',
@@ -94,7 +103,10 @@ router.put('/', authMiddleware, async (req, res) => {
 router.get('/bulk', authMiddleware, async (req, res) => {
   const filter = req.query.filter || '';
   const users = await User.find({
-    $or: [{ firstName: { $regex: filter } }, { lastName: { $regex: filter } }],
+    $or: [
+      { firstName: { $regex: filter, $options: 'i' } },
+      { lastName: { $regex: filter, $options: 'i' } },
+    ],
   });
   res.status(200).json({
     users: users.map(({ firstName, lastName, _id, username }) => ({
