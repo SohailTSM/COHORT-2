@@ -39,9 +39,11 @@ router.post('/signup', async (req, res) => {
   });
   await account.save();
   const token = jwt.sign({ userId: savedUser._id }, JWT_SECRET);
+  const { firstName, lastName, _id, username } = savedUser;
   return res.status(200).json({
     message: 'User created successfully',
     token,
+    user: { firstName, lastName, _id, username },
   });
 });
 
@@ -70,8 +72,9 @@ router.post('/signin', async (req, res) => {
       message: 'Error while logging in',
     });
   }
+  const { firstName, lastName, _id, username } = user;
   const token = jwt.sign({ userId: user._id }, JWT_SECRET);
-  res.status(200).json({ token });
+  res.status(200).json({ token, user: { firstName, lastName, _id, username } });
 });
 
 const updateSchema = zod.object({
@@ -116,6 +119,12 @@ router.get('/bulk', authMiddleware, async (req, res) => {
       username,
     })),
   });
+});
+
+router.get('/myself', authMiddleware, async (req, res) => {
+  const user = await User.findById(req.userId);
+  const { firstName, lastName, _id, username } = user;
+  res.status(200).json({ firstName, lastName, _id, username });
 });
 
 module.exports = router;

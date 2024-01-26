@@ -1,8 +1,10 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Signup from './pages/Signup';
 import Signin from './pages/Signin';
-import Dashboard from './pages/Dashboard';
+import Dashboard, { loader as dashboardLoader } from './pages/Dashboard';
 import Modal from './components/Modal';
+import { useState } from 'react';
+import { RecoilRoot } from 'recoil';
 
 function App() {
   const router = createBrowserRouter([
@@ -17,6 +19,7 @@ function App() {
     {
       path: 'dashboard',
       element: <Dashboard />,
+      loader: dashboardLoader,
     },
     // This route is for designing purpose only
     {
@@ -25,7 +28,12 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={router}></RouterProvider>;
+  return (
+    <RecoilRoot>
+      {}
+      <RouterProvider router={router}></RouterProvider>
+    </RecoilRoot>
+  );
 }
 
 export default App;
