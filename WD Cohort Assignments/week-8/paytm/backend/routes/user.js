@@ -85,18 +85,19 @@ const updateSchema = zod.object({
 
 router.put('/', authMiddleware, async (req, res) => {
   const body = req.body;
+  console.log(body);
   const { success } = updateSchema.safeParse(body);
   if (!success) {
     return res.status(411).json({
       message: 'Error while updating information',
     });
   }
-  const hashedPassword = await bcrypt.hash(body.password, 10);
+  if (body.password) {
+    const hashedPassword = await bcrypt.hash(body.password, 10);
+    body.password = hashedPassword;
+  }
 
-  await User.findByIdAndUpdate(req.userId, {
-    ...body,
-    password: hashedPassword,
-  });
+  await User.findByIdAndUpdate(req.userId, body);
 
   res.status(200).json({
     message: 'Updated successfully',

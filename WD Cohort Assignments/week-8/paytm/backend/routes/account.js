@@ -25,18 +25,18 @@ router.post('/transfer', authMiddleware, async (req, res) => {
   try {
     const toAccount = await Account.findOne({ userId: req.body.to });
     if (!toAccount) {
-      res.status(400).json({ message: 'Invalid account' });
+      return res.status(400).json({ message: 'Invalid account 1' });
     }
 
-    fromAccount.balance -= req.body.amount;
-    toAccount.balance += req.body.amount;
+    fromAccount.balance -= parseInt(req.body.amount);
+    toAccount.balance += parseInt(req.body.amount);
 
     await fromAccount.save();
     await toAccount.save();
 
-    res.status(200).json({ message: 'Transfer successful' });
+    return res.status(200).json({ message: 'Transfer successful' });
   } catch (error) {
-    res.status(400).json({ message: 'Invalid account' });
+    res.status(400).json({ message: 'Invalid account 2' });
     return;
   }
 });

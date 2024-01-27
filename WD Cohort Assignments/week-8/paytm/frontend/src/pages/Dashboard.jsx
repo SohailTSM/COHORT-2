@@ -41,6 +41,10 @@ const Dashboard = () => {
   const [users, setUsers] = useState([]);
   const [filter, setFilter] = useState('');
 
+  useEffect(() => {
+    setMyUser(myself);
+  }, []);
+
   const logout = async (e) => {
     e.preventDefault();
     localStorage.removeItem('token');
@@ -68,6 +72,15 @@ const Dashboard = () => {
             Hello,{' '}
             {myself.firstName[0].toUpperCase() + myself.firstName.substr(1)}{' '}
             {myself.lastName[0].toUpperCase() + myself.lastName.substr(1)}
+            <button
+              type='submit'
+              className=' text-white bg-black  hover:ring-1 hover:outline-none hover:ring-gray-500 font-medium rounded-lg text-sm px-4 py-2 ml-4 text-center'
+              onClick={() => {
+                navigate('/update');
+              }}
+            >
+              Update Profile
+            </button>
             <button
               type='submit'
               className=' text-white bg-black  hover:ring-1 hover:outline-none hover:ring-gray-500 font-medium rounded-lg text-sm px-4 py-2 ml-4 text-center'

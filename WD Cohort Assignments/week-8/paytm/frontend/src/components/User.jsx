@@ -1,7 +1,13 @@
-import { useState } from 'react';
-import Modal from './Modal';
+import { useSetRecoilState } from 'recoil';
+import { modalContentAtom } from '../atoms/modalContent';
 
 const User = ({ user }) => {
+  const setModalContent = useSetRecoilState(modalContentAtom);
+
+  const openModal = (e) => {
+    e.preventDefault();
+    setModalContent({ user });
+  };
   return (
     <>
       <div className='flex justify-between mb-3'>
@@ -23,6 +29,7 @@ const User = ({ user }) => {
           <button
             type='submit'
             className=' text-white bg-black  hover:ring-1 hover:outline-none hover:ring-gray-500 font-medium rounded-lg text-sm px-5 py-2 text-center'
+            onClick={openModal}
           >
             Send Money
           </button>
